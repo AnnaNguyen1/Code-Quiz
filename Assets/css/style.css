@@ -1,0 +1,119 @@
+:root {
+    --grey: rgba(53, 53, 53, 0.973);
+    --white: white;
+    --purple: rgb(204, 83, 204);
+    --light-purple: rgb(204, 83, 204, 0.8);
+    --font-sans: "Calibre","Inter","San Francisco","SF Pro Text",-apple-system,system-ui,sans-serif;
+    --font-poppins: Poppins, sans-serif;
+    --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+    --font-calibre: Calibre, Inter, "San Francisco", "SF Pro Text", -apple-system, system-ui, sans-serif;
+    --font-clattering: "American Typewriter", Poppins, sans-serif;
+    --font-times: 'Times New Roman', Times, serif;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Standard sizing of the whole page is 10px */
+html {
+    font-size: 62.5%
+}
+
+/* Apply purple backdrop on each side */
+body {
+    margin: 0 15rem;
+    padding: 0 15rem;
+    background-color: var(--purple);
+}
+
+.grey-background {
+    background-color: var(--grey);
+    height: 6rem;
+    width: 100%;
+}
+
+header {
+    display: flex;
+    flex-wrap: wrap;
+
+    color: var(--white);
+    font-family: var(--font-sans);
+}
+
+.header-info {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 2rem;
+    font-family: var(--font-sans);
+    padding-top: 2rem;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.header-info li {
+    position: relative;
+    display: inline-block;
+    padding: 0 2rem;
+    list-style-type: none;
+}
+
+.heading {
+    font-family: var(--font-clattering);
+    font-size: 4rem;
+    color: var(--purple);
+    text-align: center;
+    height: 10rem;
+}
+
+.container {
+    height: 40rem;
+    width: 100%;
+    padding-bottom: 3rem;
+}
+
+.text-container {
+    padding-left: 30rem;
+    padding-right: 30rem;
+}
+
+.header-2 {
+    color: var(--white);
+    font-family: var(--font-sans);
+    font-size: 3rem;
+    padding-bottom: 2rem;
+    font-weight: normal;
+    text-align: center;
+}
+
+.text-2 {
+    color: var(--white);
+    font-family: var(--font-sans);
+    font-size: 2rem;
+    line-height: 3rem;
+    font-weight: normal;
+    text-align:center;
+}
+
+#start-button {
+    display: inline-flex;
+    justify-content: center;
+    background-color: var(--grey);
+    border-radius: .5rem;
+    border: 3px solid var(--purple);
+    color: var(--white);
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    font-family: var(--font-sans);
+    position: relative;
+    left: 40%;
+    
+}
+
+#start-button:hover {
+    transition: all 0.2s ease-in-out;
+    box-shadow: .5rem .5rem 1rem var(--purple);
+    
+}
+
