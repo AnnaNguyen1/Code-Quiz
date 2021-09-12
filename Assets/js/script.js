@@ -149,7 +149,7 @@ function checkAnswer(event) {
         displayResult.textContent = "";
     }, 1000);
 
-    if (currentQuestionIndex === (questions.length + 1)) {
+    if (currentQuestionIndex === (questions.length)) {
         endGame();
     } else
         displayQuestion();
@@ -158,6 +158,8 @@ function checkAnswer(event) {
 
 // End Game
 function endGame() {
+    timerCount = 0;
+
     var header = "";
     var displayQuestionNumber = "";
     var displayQuestionText = "";
