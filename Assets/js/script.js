@@ -1,6 +1,5 @@
-var timerCount = document.querySelector(".timer-text");
+var timerCount = document.querySelector("#timer-text");
 var startButton = document.querySelector("#start-button");
-var header1 = document.querySelector("h1");
 var header2 = document.querySelector(".header-2");
 var displayQuestion = document.querySelector(".text-2");
 var displayAnswers = document.querySelector(".buttons-container")
@@ -69,9 +68,7 @@ function startTimer() {
 
 // Start button
 startButton.addEventListener("click", function() {
-    // Start timer 
     startTimer();
-    // Display first question 
     displayQuestion();
 }
 
@@ -79,29 +76,34 @@ startButton.addEventListener("click", function() {
 // Display questions 
 function displayQuestion() {
     // Clear values to start off
-    header1.textContent = "";
-    header2.textContent = "";
-    
-    // Start off at 0 then +1
+    // header2.textContent = "";
+
+    // Start off at 0
     currentQuestionIndex++;
 
+    // Set variables for the question, choices and answers
+    var question = questions[currentQuestionIndex].ask;
+    var options = questions[currentQuestionIndex].options;
+
+    // End game if index is larger than the number of questions
     if (currentQuestionIndex > questions.length) {
         endGame();
+        return;
     }
 
     // Display question according to index
-    var currentQuestion = questions[currentQuestionIndex];
+    var currentQuestion = question;
     displayQuestion.textContent = currentQuestion;
     
     // For loop over the answer buttons
-    for (var i=0; i < questions.options.length; i++ ) {
+    for (var i=0; i < options.length; i++ ) {
         var buttonAnswer = document.createElement("button");
-        buttonAnswer.innerText = (i + 1) + "." + questions[currentQuestionIndex].options[i];
-
+        buttonAnswer.textContent = (i + 1) + "." + options[i];
         displayAnswers.appendChild(buttonAnswer);
-    }
 
+    }
 }
+
 
 
 // End Game
