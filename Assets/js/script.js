@@ -1,8 +1,9 @@
 var timerCount = document.querySelector(".timer-text");
 var startButton = document.querySelector("#start-button");
 var header1 = document.querySelector("h1");
-var header2 = document.querySelector("#header-2");
-var displayQuestion = document.querySelector("#text-2");
+var header2 = document.querySelector(".header-2");
+var displayQuestion = document.querySelector(".text-2");
+var displayAnswers = document.querySelector(".buttons-container")
 
 
 
@@ -33,6 +34,7 @@ var questions =
     options: ["Commas", "Curly brackets", "Quotes", "Parenthesis"],
     answer: "Quotes"
 },
+{
     ask: "A very useful tool for used during development and debugging for printing content to the debugger is:",
     options: ["Javascript", "Terminal/Bash", "For loops", "Console log"],
     answer: "Console log"
@@ -41,59 +43,66 @@ var questions =
 
 // Setting default values
 var score = 0;
-var currentQuestion = 0;
+var currentQuestionIndex = -1;
 var timeLeft = 76;
 var penaltyTime = 15;
 
-// Create new elements
-var answersUl = document.createElement("ul");
-var answerLi1 = document.createElement("li");
-var answerLi2 = document.createElement("li");
-var answerLi3 = document.createElement("li");
-var answerLi4 = document.createElement("li");
+
 
 // Timer functions
 // Start timer
 function startTimer() {
     timerCount.textContent = timeLeft; // Display timeLeft = 76
 
-    countDown = setInterval(function() { // Start reducing time by 1 second and display on screen
-        timeLeft--;
-        timerCount.textContent = timeLeft;
+    countDown = setInterval(function() { 
         if (timeLeft <= 0) { // Stop game when time runs out
             clearInterval(countDown);
             endGame();
+            return;
         }
+        timeLeft--;
+        timerCount.textContent = timeLeft;
     }, 1000);
 };
 
 
 
 // Start button
-startButton.addEventListener("click",function() {
+startButton.addEventListener("click", function() {
     // Start timer 
     startTimer();
     // Display first question 
-    startQuestion(qIndex);
+    displayQuestion();
 }
 
 )
 // Display questions 
-function startQuestion();
+function displayQuestion() {
     // Clear values to start off
     header1.textContent = "";
     header2.textContent = "";
-    displayQuestion.textContent = "";
+    
+    // Start off at 0 then +1
+    currentQuestionIndex++;
 
-    // Loop through and display first question
-    for (var i=0; i < questions.length; i++) {
-        var askQuestion = questions[i].ask;
-        var chooseAnswers = questions[i].options;
-        displayQuestion.textContent = askQuestion;
+    if (currentQuestionIndex > questions.length) {
+        endGame();
     }
 
-    //Append 
+    // Display question according to index
+    var currentQuestion = questions[currentQuestionIndex];
+    displayQuestion.textContent = currentQuestion;
     
+    // For loop over the answer buttons
+    for (var i=0; i < questions.options.length; i++ ) {
+        var buttonAnswer = document.createElement("button");
+        buttonAnswer.innerText = (i + 1) + "." + questions[currentQuestionIndex].options[i];
+
+        displayAnswers.appendChild(buttonAnswer);
+    }
+
+}
+
 
 // End Game
 function endGame() {
