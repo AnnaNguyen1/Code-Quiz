@@ -1,9 +1,9 @@
 var timerCount = document.querySelector("#timer-text");
 var startButton = document.querySelector("#start-button");
 var header2 = document.querySelector(".header-2");
-var displayQuestion = document.querySelector(".text-2");
-var displayAnswers = document.querySelector(".buttons-container")
-
+var displayQuestionText = document.querySelector(".question");
+var displayAnswersText = document.querySelector(".buttons-container");
+var displayResult = document.querySelector(".result");
 
 
 // Arrays to display a list of questions
@@ -45,6 +45,8 @@ var score = 0;
 var currentQuestionIndex = -1;
 var timeLeft = 76;
 var penaltyTime = 15;
+var correctScore = 10;
+var incorrectScore = 5;
 
 
 
@@ -70,13 +72,14 @@ function startTimer() {
 startButton.addEventListener("click", function() {
     startTimer();
     displayQuestion();
+    startButton.style.display = "none";
 }
 
 )
 // Display questions 
 function displayQuestion() {
     // Clear values to start off
-    // header2.textContent = "";
+    header2.textContent = "";
 
     // Start off at 0
     currentQuestionIndex++;
@@ -93,17 +96,35 @@ function displayQuestion() {
 
     // Display question according to index
     var currentQuestion = question;
-    displayQuestion.textContent = currentQuestion;
+    displayQuestionText.textContent = currentQuestion;
     
     // For loop over the answer buttons
     for (var i=0; i < options.length; i++ ) {
         var buttonAnswer = document.createElement("button");
+        buttonAnswer.setAttribute("class", "btn-options")
         buttonAnswer.textContent = (i + 1) + "." + options[i];
-        displayAnswers.appendChild(buttonAnswer);
-
+        displayAnswersText.appendChild(buttonAnswer);
+        buttonAnswer.addEventListener('click', checkAnswer);
     }
+
 }
 
+// Answer click function 
+function checkAnswer(event) {
+    event.preventDefault();
+    var element = event.target; // event.target refers to the clicked event 
+    if (element.textContent === questions[currentQuestionIndex].answer) {
+        displayResult.textContent = "Correct!"
+        score += correctScore;
+    } else 
+        displayResult.textContent = "Incorrect!"
+        score -= incorrectScore;
+
+    if (currentQuestionIndex === questions.length) {
+        endGame();
+    } else
+        displayQuestion();
+}
 
 
 // End Game
