@@ -1,10 +1,12 @@
 var timerCount = document.querySelector("#timer-text");
 var startButton = document.querySelector("#start-button");
-var header = document.querySelector(".header");
+var header = document.querySelector(".title");
 var displayQuestionNumber = document.querySelector(".question-number");
 var displayQuestionText = document.querySelector(".question");
 var displayAnswersText = document.querySelector(".buttons-container");
 var displayResult = document.querySelector(".result");
+var initials = document.querySelector(".initials-container")
+
 
 
 // Arrays to display a list of questions
@@ -16,8 +18,8 @@ var questions =
 },
 {
     ask: "The condition in an if/else statement is enclosed within _______.",
-    options: ["Quotes", "Curly brackers", "Parentheses", "Square brackets"],
-    answer: "Parenthesis"
+    options: ["Quotes", "Curly brackets", "Parentheses", "Square brackets"],
+    answer: "Parentheses"
 },
 {
     ask: "Inside which HTML element do we put the Javascript?",
@@ -49,6 +51,7 @@ var timeLeft = 76;
 var penaltyTime = 15;
 var correctScore = 10;
 var incorrectScore = 5;
+var scoreArray = [];
 
 
 
@@ -83,9 +86,6 @@ startButton.addEventListener("click", function() {
 )
 // Display questions 
 function displayQuestion() {
-    // Hide header
-    // header.textContent = "";
-
     // Start off at 0
     currentQuestionIndex++;
 
@@ -131,25 +131,24 @@ function checkAnswer(event) {
     event.preventDefault();
     var element = event.target; // event.target refers to the clicked event 
 
-    if (element.textContent === questions[currentQuestionIndex].answer) {
+    if (currentQuestionIndex != (questions.length - 1)) {
+        if (element.textContent === questions[currentQuestionIndex].answer) {
         displayResult.textContent = correct;
         score += correctScore;
         numberQuestionsCorrect++;
-        console.log(numberQuestionsCorrect);
-        console.log(score);
-    } else 
+        } else {
         displayResult.textContent = incorrect;
         score -= incorrectScore;
         timeLeft -= penaltyTime;
-        console.log(numberQuestionsCorrect);
-        console.log(score);
+        }
+    }
 
     // Remove text after 1 second
     setTimeout(function() {
         displayResult.textContent = "";
     }, 1000);
 
-    if (currentQuestionIndex === (questions.length)) {
+    if (currentQuestionIndex === (questions.length - 1)) {
         endGame();
     } else
         displayQuestion();
@@ -159,16 +158,82 @@ function checkAnswer(event) {
 // End Game
 function endGame() {
     timerCount = 0;
+    console.log(score);
 
-    var header = "";
-    var displayQuestionNumber = "";
-    var displayQuestionText = "";
-
-    if (score < 0) {
-        score.textContent = 0;
+    if (score <= 0) {
+        score = 0;
+        console.log("score", score);
     }
-
+    displayAnswersText.innerHTML = [];
     header.textContent = "End of Quiz!";
-    displayQuestionNumber.textContent = "You got " + numberQuestionsCorrect + "questions correct.";
-    displayQuestionText.textContent = "Your final score is " + score + " .";
+    if (numberQuestionsCorrect === 1) {
+        displayQuestionText.textContent = "You got " + numberQuestionsCorrect + " question correct.";
+    } else 
+    displayQuestionText.textContent = "You got " + numberQuestionsCorrect + " questions correct.";
+
+    displayQuestionNumber.textContent = "Your final score is " + score + "!";
+
+    // Create input details
+    if (score >= 0) {
+    var resultInputContent = `
+    <p class="input">Enter your name to save your score:</p>
+    <input type= "text" id= "initials" placeholder = "Name">
+    <button onclick="storeScore()"> Save Score </button>
+    <button onclick ="resetGame()"> Cancel </button>`;
+
+    initials.innerHTML = resultInputContent;
+    }
 }
+
+// Cancel and do not save in local storage
+function resetGame() {
+    console.log("resetGame");
+    score = 0;
+    currentQuestionIndex = -1
+    timeLeft = 0;
+    location.reload();
+}
+
+// Enter high score into local storage
+function storeScore(event) {
+    // Store as an object 
+    var storeNewScore = {
+        initials: document.querySelector("#initials").value.trim(),
+        highScore: score
+    };
+    // Pushed to empty array
+    scoreArray.push(storeNewScore);
+
+    // stored as a string
+    localStorage.setItem("scores", JSON.stringify(scoreArray));
+    
+    // render scores onscreen 
+    renderScore();
+}
+
+// Function to display score after entering Initials
+function renderScore() {
+    // var renderScoreList = JSON.parse(localStorage.getItem("highScores"));
+    // var scoringBoard = document.createElement("ul");
+    // var scoreList = document.createElement("li");
+    // displayQuestionText.appendChild(scoringBoard);
+    
+    // scoringBoard.setAttribute("class", "scoring-tally");
+    // scoreList.setAttribute("class", "score-list");
+
+    // displayQuestionNumber.textContent = "Scoring Board";
+    // displayQuestionText.textContent = ""; 
+    // initials.style.display = "none"; 
+
+
+    // // Create a new li for each score
+    // for (i=0; i < scoreArray.length; i++);
+    // var set = scoreArray[i].initials + " : " + scoreArray[i].Highscore
+    // var scoreList = document.createElement("li");
+    // scoreList.textContent = set;
+    // displayQuestionText.appendChild(scoreList);
+
+
+}
+
+
