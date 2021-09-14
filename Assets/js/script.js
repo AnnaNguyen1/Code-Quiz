@@ -51,9 +51,6 @@ var timeLeft = 76;
 var penaltyTime = 15;
 var correctScore = 10;
 var incorrectScore = 5;
-var scoreArray = [];
-
-
 
 // Timer functions
 // Start timer
@@ -201,11 +198,21 @@ function storeScore(event) {
         initials: document.querySelector("#initials").value.trim(),
         highScore: score
     };
+    
+    // Grab what is already in local storage and turn it back into an Array 
+    var scoreArray = localStorage.getItem("allHighScores");
+    if (scoreArray === null) { // if there is nothing in the array then it will return undefined
+        scoreArray = [];
+    } else {
+        scoreArray = JSON.parse(scoreArray);
+    }
+
     // Pushed to empty array
     scoreArray.push(storeNewScore);
 
     // stored as a string
-    localStorage.setItem("scores", JSON.stringify(scoreArray));
+    var newScore = JSON.stringify(scoreArray);
+    localStorage.setItem("allHighScores", newScore);
     
     // render scores onscreen 
     renderScore();
@@ -213,27 +220,27 @@ function storeScore(event) {
 
 // Function to display score after entering Initials
 function renderScore() {
-    // var renderScoreList = JSON.parse(localStorage.getItem("highScores"));
-    // var scoringBoard = document.createElement("ul");
-    // var scoreList = document.createElement("li");
-    // displayQuestionText.appendChild(scoringBoard);
-    
-    // scoringBoard.setAttribute("class", "scoring-tally");
-    // scoreList.setAttribute("class", "score-list");
-
-    // displayQuestionNumber.textContent = "Scoring Board";
-    // displayQuestionText.textContent = ""; 
-    // initials.style.display = "none"; 
+    var renderScoreArray = JSON.parse(localStorage.getItem("highScores"));
+    var scoringBoard = document.createElement("ul");
+    displayQuestionText.appendChild(scoringBoard);
+    scoringBoard.setAttribute("class", "scoring-tally");
 
 
-    // // Create a new li for each score
-    // for (i=0; i < scoreArray.length; i++);
-    // var set = scoreArray[i].initials + " : " + scoreArray[i].Highscore
-    // var scoreList = document.createElement("li");
-    // scoreList.textContent = set;
-    // displayQuestionText.appendChild(scoreList);
+    displayQuestionNumber.textContent = "Scoring Board";
+    displayQuestionText.textContent = ""; 
+    initials.style.display = "none"; 
 
 
+    // Create a new li for each score
+    if (renderScoreArray != null) {
+        for (i=0; i < renderScoreArray.length; i++) {
+        var set = renderScoreArray[i].initials + " : " + renderScoreArray[i].highScore;
+        var scoreList = document.createElement("li");
+        scoreList.setAttribute("class", "score-list");
+        scoreList.textContent = set;
+        displayQuestionText.appendChild(scoreList);
+        }
+    }
 }
 
 
