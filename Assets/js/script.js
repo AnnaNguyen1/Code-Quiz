@@ -6,7 +6,7 @@ var displayQuestionText = document.querySelector(".question");
 var displayAnswersText = document.querySelector(".buttons-container");
 var displayResult = document.querySelector(".result");
 var initials = document.querySelector(".initials-container")
-
+var viewScores = document.querySelector(".highscores");
 
 
 // Arrays to display a list of questions
@@ -78,9 +78,16 @@ startButton.addEventListener("click", function() {
     startTimer();
     displayQuestion();
     startButton.style.display = "none";
-}
+});
 
-)
+// View Highscores button
+viewScores.addEventListener("click", function(){
+    renderScore();
+    header.textContent = "High Scores";
+    displayQuestionNumber.textContent = "Scoring Board";
+    startButton.style.display = "none";
+});
+
 // Display questions 
 function displayQuestion() {
     // Start off at 0
@@ -128,7 +135,7 @@ function checkAnswer(event) {
     event.preventDefault();
     var element = event.target; // event.target refers to the clicked event 
 
-    if (currentQuestionIndex != (questions.length - 1)) {
+    if (currentQuestionIndex != questions.length) {
         if (element.textContent === questions[currentQuestionIndex].answer) {
         displayResult.textContent = correct;
         score += correctScore;
@@ -154,8 +161,8 @@ function checkAnswer(event) {
 
 // End Game
 function endGame() {
-    timerCount = 0;
-    console.log(score);
+    clearInterval(countDown);
+    timerCount.textContent = 0;
 
     if (score <= 0) {
         score = 0;
@@ -172,27 +179,38 @@ function endGame() {
 
     // Create input details
     if (score >= 0) {
-    var resultInputContent = `
-    <p class="input">Enter your name to save your score:</p>
-    <input type= "text" id= "initials" placeholder = "Name">
-    <button onclick="storeScore()"> Save Score </button>
-    <button onclick ="resetGame()"> Cancel </button>`;
+        var resultInputContent = `
+            <p class="input">Enter your name to save your score:</p>
+            <input type= "text" id= "initials" placeholder = "Name">
+            <button class="save-score" onclick="storeScore()"> Save Score </button>
+            <button class="cancel" onclick ="resetGame()"> Cancel </button>`;
 
-    initials.innerHTML = resultInputContent;
-    }
-}
+        initials.innerHTML = resultInputContent;
+    };
+
+};
 
 // Cancel and do not save in local storage
 function resetGame() {
-    console.log("resetGame");
     score = 0;
     currentQuestionIndex = -1
     timeLeft = 0;
     location.reload();
-}
+};
 
 // Enter high score into local storage
 function storeScore(event) {
+
+    // Display error message if name has not been entered
+    console.log(typeof document.querySelector("#initials"));
+    if (document.querySelector("#initials").value.length === 0) {
+        var errorMessage = document.createElement("p");
+        errorMessage.setAttribute("id", "error")
+        errorMessage.textContent = "Name is required!"
+        initials.appendChild(errorMessage);
+        return;
+    }
+    
     // Store as an object 
     var storeNewScore = {
         initials: document.querySelector("#initials").value.trim(),
@@ -220,18 +238,18 @@ function storeScore(event) {
 
 // Function to display score after entering Initials
 function renderScore() {
-    var renderScoreArray = JSON.parse(localStorage.getItem("highScores"));
-    var scoringBoard = document.createElement("ul");
-    displayQuestionText.appendChild(scoringBoard);
-    scoringBoard.setAttribute("class", "scoring-tally");
-
 
     displayQuestionNumber.textContent = "Scoring Board";
     displayQuestionText.textContent = ""; 
     initials.style.display = "none"; 
 
+    var renderScoreArray = JSON.parse(localStorage.getItem("allHighScores"));
+    var scoringBoard = document.createElement("ul");
+    displayQuestionText.appendChild(scoringBoard);
+    scoringBoard.setAttribute("class", "scoring-tally");
 
-    // Create a new li for each score
+
+    // Create a new li for each score and add buttons
     if (renderScoreArray != null) {
         for (i=0; i < renderScoreArray.length; i++) {
         var set = renderScoreArray[i].initials + " : " + renderScoreArray[i].highScore;
@@ -239,8 +257,35 @@ function renderScore() {
         scoreList.setAttribute("class", "score-list");
         scoreList.textContent = set;
         displayQuestionText.appendChild(scoreList);
-        }
-    }
-}
+        };
+        
+        // Clear button
+        var clear = document.createElement("button");
+        clear.setAttribute("class", "clear");
+        clear.textContent = "Clear High Scores";
+        displayAnswersText.appendChild(clear);
+        
+        clear.addEventListener('click', function(){
+            localStorage.clear();
+            document.querySelectorAll(".score-list").forEach(function(el) {
+                el.style.display = "none";
+            });
+        });    
+
+    } else {
+        displayQuestionText.textContent = "No highscores recorded!";
+    };
+    
+    var restart = document.createElement("button");
+    restart.setAttribute("class", "restart");
+    restart.textContent = "Go Back";
+    displayAnswersText.appendChild(restart);
+        
+    restart.addEventListener('click', function() {
+    location.reload();
+    });
+    
+}   
+
 
 

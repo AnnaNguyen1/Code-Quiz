@@ -3,7 +3,7 @@
     --white: white;
     --purple: rgb(204, 83, 204);
     --light-purple: rgb(204, 83, 204, 0.8);
-    --font-sans: "Calibre","Inter","San Francisco","SF Pro Text",-apple-system,system-ui,sans-serif;
+    --font-sans: "Inter","San Francisco","SF Pro Text",-apple-system,system-ui,sans-serif;
     --font-poppins: Poppins, sans-serif;
     --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
     --font-calibre: Calibre, Inter, "San Francisco", "SF Pro Text", -apple-system, system-ui, sans-serif;
@@ -58,8 +58,23 @@ header {
     list-style-type: none;
 }
 
+.highscores {
+    background-color: var(--purple);
+    color: var(--grey);
+    border: none;
+    font-size: 2rem;
+    font-family: var(--font-sans);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.highscores:hover {
+    transition: all 0.2s ease-in-out;
+    text-shadow: .2rem .2rem 1rem var(--white);
+}
+
 .heading {
-    font-family: var(--font-clattering);
+    font-family: var(--font-poppins);
     font-size: 4rem;
     color: var(--purple);
     text-align: center;
@@ -87,6 +102,7 @@ header {
     text-align: center;
     width: 100%;
     border-bottom: 1px solid var(--purple);
+    display: inline-block;
 }
 
 .question,
@@ -104,12 +120,12 @@ header {
     margin-top: 2rem;
 }
 
-
-
 #start-button,
 .btn-options,
-#save-score,
-#cancel {
+.save-score,
+.cancel,
+.clear,
+.restart {
     display: inline-flex;
     justify-content: center;
     background-color: var(--grey);
@@ -122,24 +138,35 @@ header {
     font-family: var(--font-sans);
     position: relative;
     left: 40%;
-    
+    cursor: pointer;
 }
 
 #start-button:hover,
 .btn-options:hover,
-#save-score,
-#cancel {
+.save-score:hover,
+.cancel:hover,
+.clear:hover,
+.restart:hover {
     transition: all 0.2s ease-in-out;
     box-shadow: .5rem .5rem 1rem var(--purple);
     
 }
 
-#save-score,
-#cancel {
+.save-score,
+.cancel,
+.clear,
+.restart {
     position: relative;
     left: 0;
     margin: 1.5rem 1rem;
 }
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .btn-options {
     margin: 1rem;
@@ -155,6 +182,7 @@ header {
     padding: 1rem 2rem;
     padding-right: 0;
     width: 100%;
+    text-align: center;
 }
 
 input[type=text] {
@@ -170,4 +198,41 @@ input[type=text] {
     padding-left: .5rem;
     color: var(--white);
     list-style-type: none;
+    margin-bottom: 1rem;
+}
+
+#initials {
+    margin-right: 1rem;
+    font-family: var(--font-sans);
+    color: black;
+    font-weight: bold;
+}
+
+#error {
+    color: white;
+    font-size: 1rem;
+    font-family: var(--font-sans);
+}
+
+@media screen and (max-width: 1450px) {
+    body {
+        margin-left: 5rem;
+        margin-right: 5rem;
+    }
+    .text-container {
+        padding-left: 10rem;
+        padding-right: 10rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    body {
+        margin-left: 0rem;
+        margin-right: 0rem;
+        padding: 0 5rem;
+    }
+    .text-container {
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
 }
