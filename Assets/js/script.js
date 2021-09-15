@@ -47,10 +47,10 @@ var questions =
 var score = 0;
 var numberQuestionsCorrect = 0;
 var currentQuestionIndex = -1;
-var timeLeft = 76;
+var timeLeft = 75;
 var penaltyTime = 15;
 var correctScore = 10;
-var incorrectScore = 5;
+var incorrectScore = 2;
 
 // Timer functions
 // Start timer
