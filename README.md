@@ -11,3 +11,6 @@ It runs on the browser using HTML, CSS and Javascript.
 
 ![User can enter the coding quiz and upon completion, enter their name to save the high score. Users can also reset the highscore list and try again.](./Assets/images/JSQuiz.gif)
 
+## Link to Quiz
+
+https://annanguyen1.github.io/Code-Quiz/
