@@ -86,6 +86,10 @@ viewScores.addEventListener("click", function(){
     header.textContent = "High Scores";
     displayQuestionNumber.textContent = "Scoring Board";
     startButton.style.display = "none";
+
+    // Clear timer if this was clicked in the middle of the quiz
+    clearInterval(countDown);
+    timerCount.textContent = 0;
 });
 
 // Display questions 
