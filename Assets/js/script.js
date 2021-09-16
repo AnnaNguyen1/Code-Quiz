@@ -263,7 +263,7 @@ function renderScore() {
         var clear = document.createElement("button");
         clear.setAttribute("class", "clear");
         clear.textContent = "Clear High Scores";
-        displayAnswersText.innerHTML="";
+        displayAnswersText.innerHTML=""; // to clear and then append
         displayAnswersText.appendChild(clear);
         
         clear.addEventListener('click', function(){
@@ -280,7 +280,7 @@ function renderScore() {
     var restart = document.createElement("button");
     restart.setAttribute("class", "restart");
     restart.textContent = "Go Back";
-    displayAnswersText.innerHTML="";
+    displayAnswersText.innerHTML=""; // to clear and then append
     displayAnswersText.appendChild(restart);
         
     restart.addEventListener('click', function() {
