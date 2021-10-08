@@ -6,6 +6,8 @@ Users have 75 seconds to answer 6 questions. Each question answered correctly wi
 At the end, users can record their score and this will be added to the existing list of high scores. 
 It runs on the browser using HTML, CSS and Javascript. 
 
+## Technologies used
+HTML, CSS, Javascript
 
 ## Preview of the code quiz
 
@@ -14,3 +16,6 @@ It runs on the browser using HTML, CSS and Javascript.
 ## Link to Quiz
 
 https://annanguyen1.github.io/Code-Quiz/
+
+## Contact Information
+https://github.com/AnnaNguyen1
